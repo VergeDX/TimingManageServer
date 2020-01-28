@@ -17,7 +17,7 @@ public class EndEventNode implements ApiNode {
     }
 
     /**
-     * 结束事件，要求字段：userAccessToken，将结束一个事件并返回事件对象 Json
+     * 结束事件，要求字段：userAccessToken，将结束一个事件并返回事件对象 Json 的封装
      *
      * @return 错误信息或事件对象 Json
      */
