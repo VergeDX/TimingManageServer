@@ -10,7 +10,7 @@ public class Event {
     /**
      * 事件访问 Token，格式：md5($username + $startSecond + Instant.now().getEpochSecond())
      *
-     * @see EventManager#generateEventToken(Event)
+     * @see EventManager#generateEventToken(PendingEvent)
      */
     @DatabaseField(id = true)
     private String eventToken;
@@ -45,11 +45,9 @@ public class Event {
     @DatabaseField
     private long intervalSecond;
 
-    public Event(String username, long startSecond) {
+    public Event(String username, long startSecond, String eventToken) {
         creator = username;
         this.startSecond = startSecond;
-
-        // 赋值事件 Token
-        EventManager.generateEventToken(this);
+        this.eventToken = eventToken;
     }
 }

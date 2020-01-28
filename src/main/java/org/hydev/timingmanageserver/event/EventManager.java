@@ -11,18 +11,9 @@ import org.hydev.timingmanageserver.user.UserManager;
 
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class EventManager {
-    /**
-     * 管理状态中的 Event（还未结束），creator -> Event
-     *
-     * @see Event#getEventToken()
-     */
-    private static Map<String, Event> pendingEvent = new HashMap<>();
-
     /**
      * 生成事件访问 Token，防止多次赋值
      *
@@ -30,7 +21,7 @@ public class EventManager {
      * @return 生成的访问 Token
      * @see Event#getEventToken()
      */
-    public static String generateEventToken(Event event) {
+    public static String generateEventToken(PendingEvent event) {
         // 防止重复赋值
         if (!Objects.isNull(event.getEventToken())) {
             throw new AssertionError("事件访问 Token 重复赋值了！");
@@ -50,7 +41,7 @@ public class EventManager {
      */
     public static boolean hasPendingEvent(String userAccessToken) {
         String username = UserManager.getUserByToken(userAccessToken).getUsername();
-        return !Objects.isNull(pendingEvent.get(username));
+        return Database.hasPendingEvent(username);
     }
 
     /**
@@ -59,11 +50,12 @@ public class EventManager {
      * @param userAccessToken 用户访问 Token.
      * @return 开始的事件
      */
-    public static Event startEvent(String userAccessToken) {
+    public static PendingEvent startEvent(String userAccessToken) {
         String username = UserManager.getUserByToken(userAccessToken).getUsername();
-        Event event = new Event(username, Instant.now().getEpochSecond());
-        pendingEvent.put(username, event);
-        return event;
+        PendingEvent pendingEvent = new PendingEvent(username, Instant.now().getEpochSecond());
+        Database.insertPendingEvent(pendingEvent);
+
+        return pendingEvent;
     }
 
     /**
@@ -74,12 +66,10 @@ public class EventManager {
      */
     public static String endEvent(String userAccessToken) {
         String username = UserManager.getUserByToken(userAccessToken).getUsername();
-
-        // 把 Event 拿回来，（解除 pending 状态）
-        Event event = pendingEvent.get(username);
-        pendingEvent.remove(username);
+        PendingEvent pendingEvent = Database.removePendingEvent(username);
 
         // 设置结束时间以持续时间
+        Event event = new Event(username, pendingEvent.getStartSecond(), pendingEvent.getEventToken());
         event.setEndSecond(Instant.now().getEpochSecond());
         event.setIntervalSecond(event.getEndSecond() - event.getStartSecond());
 

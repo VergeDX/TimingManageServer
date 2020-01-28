@@ -3,8 +3,8 @@ package org.hydev.timingmanageserver.node.eventnode;
 import api.ApiAccess;
 import api.ApiNode;
 import com.google.gson.Gson;
-import org.hydev.timingmanageserver.event.Event;
 import org.hydev.timingmanageserver.event.EventManager;
+import org.hydev.timingmanageserver.event.PendingEvent;
 import org.hydev.timingmanageserver.status.ServerResponse;
 import org.hydev.timingmanageserver.status.Status;
 import org.hydev.timingmanageserver.user.UserManager;
@@ -39,7 +39,7 @@ public class StartEventNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "你有未完成的事件，请先结束该事件（/endEvent）"));
         }
 
-        Event event = EventManager.startEvent(userAccessToken);
-        return new Gson().toJson(new ServerResponse(Status.OK, event.getEventToken()));
+        PendingEvent pendingEvent = EventManager.startEvent(userAccessToken);
+        return new Gson().toJson(new ServerResponse(Status.OK, pendingEvent.getEventToken()));
     }
 }

@@ -7,12 +7,15 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import org.hydev.timingmanageserver.event.Event;
+import org.hydev.timingmanageserver.event.PendingEvent;
 import org.hydev.timingmanageserver.user.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Database {
+    public static Dao<PendingEvent, String> pendingEventDao;
     @Getter
     private static Dao<User, String> userDao;
     @Getter
@@ -26,9 +29,11 @@ public class Database {
         try (ConnectionSource connectionSource = new JdbcConnectionSource("jdbc:sqlite:Database.db")) {
             TableUtils.createTableIfNotExists(connectionSource, User.class);
             TableUtils.createTableIfNotExists(connectionSource, Event.class);
+            TableUtils.createTableIfNotExists(connectionSource, PendingEvent.class);
 
             userDao = DaoManager.createDao(connectionSource, User.class);
             eventDao = DaoManager.createDao(connectionSource, Event.class);
+            pendingEventDao = DaoManager.createDao(connectionSource, PendingEvent.class);
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
@@ -113,5 +118,59 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 通过用户名查询是否有未完成的事件
+     *
+     * @param username 用户名
+     * @return true（有），false（没有）
+     */
+    public static boolean hasPendingEvent(String username) {
+        PendingEvent pendingEvents = null;
+        try {
+            pendingEvents = pendingEventDao.queryForId(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return !Objects.isNull(pendingEvents);
+    }
+
+    /**
+     * 直接插入一个未完成事件
+     *
+     * @param pendingEvent 要插入的未完成事件
+     */
+    public static void insertPendingEvent(PendingEvent pendingEvent) {
+        try {
+            pendingEventDao.create(pendingEvent);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过用户名移除未完成事件，并返回它
+     *
+     * @param username 用户名
+     * @return 用户对应的未完成事件
+     */
+    public static PendingEvent removePendingEvent(String username) {
+        PendingEvent pendingEvent = null;
+
+        try {
+            pendingEvent = pendingEventDao.queryForId(username);
+            pendingEventDao.deleteById(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // 取回的未完成事件不能为空
+        if (Objects.isNull(pendingEvent)) {
+            throw new RuntimeException("取回的未完成事件为空");
+        }
+
+        return pendingEvent;
     }
 }
