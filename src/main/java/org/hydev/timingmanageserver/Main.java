@@ -9,9 +9,8 @@ import org.hydev.timingmanageserver.node.usernode.RegisterNode;
 
 // TODO: 2020/1/25 0025
 //  1. 多线程访问
-//  2. 设置 Help Usage 等.
 public class Main {
-    private static final String HELP_USAGE = "超链接 -> GitHub";
+    private static final String HELP_USAGE = "用法请参考 <a href=\"https://github.com/VergeDX/TimingManageServer/blob/master/README.md\">Github 上的文档</a>";
 
     public static void main(String[] args) {
         Database.initDatabase();
