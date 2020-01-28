@@ -68,7 +68,7 @@ public class EventManager {
         String username = UserManager.getUserByToken(userAccessToken).getUsername();
         PendingEvent pendingEvent = Database.removePendingEvent(username);
 
-        // 设置结束时间以持续时间
+        // 设置结束时间和持续时间
         Event event = new Event(username, pendingEvent.getStartSecond(), pendingEvent.getEventToken());
         event.setEndSecond(Instant.now().getEpochSecond());
         event.setIntervalSecond(event.getEndSecond() - event.getStartSecond());
