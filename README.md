@@ -3,7 +3,7 @@
 
 ## 部署
 1. 请去 [releases](https://github.com/VergeDX/TimingManageServer/releases) 下载最新版本的 jar 包
-2. 命令行执行 `java -jar TimingManageServer-x.x.x-jar-with-dependencies.jar`
+2. 命令行执行 `java -jar TimingManageServer-x.x.x-jar-with-dependencies.jar 端口号 (默认为 2333)`
 3. 服务器即在 `http://localhost:2333` 启动
 
 ## Api 节点与功能
