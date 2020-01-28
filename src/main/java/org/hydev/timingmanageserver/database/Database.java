@@ -23,7 +23,7 @@ public class Database {
      */
     public static void initDatabase() {
         // TODO: 2020/1/25 0025 改用 MySQL
-        try (ConnectionSource connectionSource = new JdbcConnectionSource("jdbc:sqlite:test.db")) {
+        try (ConnectionSource connectionSource = new JdbcConnectionSource("jdbc:sqlite:Database.db")) {
             TableUtils.createTableIfNotExists(connectionSource, User.class);
             TableUtils.createTableIfNotExists(connectionSource, Event.class);
 
