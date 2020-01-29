@@ -45,6 +45,6 @@ public class RegisterNode implements ApiNode {
         }
 
         User user = new User(username, SecureUtil.md5(userPassword));
-        return "注册成功";
+        return new Gson().toJson(new ServerResponse(Status.OK, "注册成功"));
     }
 }

@@ -34,7 +34,7 @@ public class LoginNode implements ApiNode {
         }
         // 没有这个用户名/密碼
         if (!UserHelper.isUsernameTaken(username) || UserHelper.isPasswordWrong(username, SecureUtil.md5(userPassword))) {
-            return new Gson().toJson(new ServerResponse(Status.ERROR, "用户名或密码错误。请注意，用户名区分大小写"));
+            return new Gson().toJson(new ServerResponse(Status.ERROR, "用户名或密码错误。请注意区分大小写"));
         }
 
         User user = Database.getUserByUsername(username);
