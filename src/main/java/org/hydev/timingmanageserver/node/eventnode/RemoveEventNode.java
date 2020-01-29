@@ -2,11 +2,13 @@ package org.hydev.timingmanageserver.node.eventnode;
 
 import api.ApiAccess;
 import api.ApiNode;
+import cn.hutool.crypto.SecureUtil;
 import com.google.gson.Gson;
-import org.hydev.timingmanageserver.event.EventManager;
+import org.hydev.timingmanageserver.database.Database;
+import org.hydev.timingmanageserver.event.EventHelper;
 import org.hydev.timingmanageserver.status.ServerResponse;
 import org.hydev.timingmanageserver.status.Status;
-import org.hydev.timingmanageserver.user.UserManager;
+import org.hydev.timingmanageserver.user.UserHelper;
 
 import java.util.Objects;
 
@@ -23,20 +25,26 @@ public class RemoveEventNode implements ApiNode {
      */
     @Override
     public String process(ApiAccess access) {
+        String username = access.getHeaders().get("username");
+        String userPassword = access.getHeaders().get("password");
         String eventToken = access.getHeaders().get("eventToken");
-        String userAccessToken = access.getHeaders().get("userAccessToken");
 
-        // 没传事件 Token/用户访问 Token 或为空
-        if (Objects.isNull(eventToken) || eventToken.isEmpty() || Objects.isNull(userAccessToken) || userAccessToken.isEmpty()) {
-            return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有事件 Token（eventToken）或用户访问 Token（userAccessToken）参数"));
+        // 没传用户名/密码或为空
+        if (Objects.isNull(username) || username.isEmpty() || Objects.isNull(userPassword) || userPassword.isEmpty() || Objects.isNull(eventToken) || eventToken.isEmpty()) {
+            return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有用户名（username）、密码（password）或事件 Token（eventToken）参数"));
         }
-        // 事件 Token / 用户访问 Token 不存在/不匹配
-        if (!EventManager.isEventTokenExist(eventToken) || !UserManager.isUserAccessTokenExist(userAccessToken) ||
-                !UserManager.getUserByToken(userAccessToken).getUsername().equals(EventManager.getEventByToken(eventToken).getCreator())) {
-            return new Gson().toJson(new ServerResponse(Status.ERROR, "事件 Token 或用户访问 Token 不存在/不匹配，您可能未结束该事件（/endEvent）"));
+        // 用户信息不正确
+        if (!UserHelper.isPasswordCorrect(username, SecureUtil.md5(userPassword))) {
+            return new Gson().toJson(new ServerResponse(Status.ERROR, "用户名或密码错误"));
+        }
+        // 该用户没有这个事件
+        if (!UserHelper.parseEventTokens(Database.getUserByUsername(username).getEventTokens()).contains(eventToken)) {
+            return new Gson().toJson(new ServerResponse(Status.ERROR, "你没有这个事件"));
         }
 
-        EventManager.removeEvent(eventToken, userAccessToken);
+        EventHelper.getFinishedEventByToken(eventToken).remove();
+        UserHelper.removeEvent(username, eventToken);
+
         return new Gson().toJson(new ServerResponse(Status.OK, "事件已移除"));
     }
 }

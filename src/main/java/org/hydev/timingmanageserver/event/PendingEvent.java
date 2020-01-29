@@ -2,11 +2,16 @@ package org.hydev.timingmanageserver.event;
 
 import com.j256.ormlite.field.DatabaseField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hydev.timingmanageserver.database.Database;
+
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class PendingEvent {
+@EqualsAndHashCode(callSuper = false)
+public class PendingEvent extends Event {
     /**
      * 事件创建的用户名
      */
@@ -20,18 +25,29 @@ public class PendingEvent {
     private long startSecond;
 
     /**
-     * 事件访问 Token，格式：md5($username + $startSecond + Instant.now().getEpochSecond())
+     * 事件访问 Token，格式：md5($username + $startSecond)
      *
-     * @see EventManager#generateEventToken(PendingEvent)
+     * @see EventHelper#generateEventToken(PendingEvent)
      */
     @DatabaseField
     private String eventToken;
 
-    public PendingEvent(String username, long startSecond) {
-        creator = username;
-        this.startSecond = startSecond;
+    public PendingEvent(String username) {
+        this.start(username);
+    }
 
-        // 赋值事件 Token
-        EventManager.generateEventToken(this);
+    @Override
+    protected Event start(String username) {
+        creator = username;
+        startSecond = Instant.now().getEpochSecond();
+        EventHelper.generateEventToken(this);
+
+        Database.insertPendingEvent(this);
+        return this;
+    }
+
+    @Override
+    public FinishedEvent end() {
+        return new FinishedEvent(this);
     }
 }

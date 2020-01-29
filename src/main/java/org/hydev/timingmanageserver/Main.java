@@ -3,7 +3,6 @@ package org.hydev.timingmanageserver;
 import api.ApiServer;
 import org.hydev.timingmanageserver.database.Database;
 import org.hydev.timingmanageserver.node.eventnode.*;
-import org.hydev.timingmanageserver.node.usernode.GetUserInfoNode;
 import org.hydev.timingmanageserver.node.usernode.LoginNode;
 import org.hydev.timingmanageserver.node.usernode.RegisterNode;
 
@@ -29,7 +28,7 @@ public class Main {
         ApiServer apiServer = new ApiServer(2333);
         apiServer.setHelpUsage(HELP_USAGE);
 
-        apiServer.register(new RegisterNode(), new LoginNode(), new GetUserInfoNode(),
+        apiServer.register(new RegisterNode(), new LoginNode(),
                 new StartEventNode(), new EndEventNode(), new RemoveEventNode(),
                 new GetEventInfoNode(), new SetDescriptionNode());
         apiServer.start();

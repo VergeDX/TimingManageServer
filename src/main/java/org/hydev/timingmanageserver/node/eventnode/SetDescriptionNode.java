@@ -3,9 +3,8 @@ package org.hydev.timingmanageserver.node.eventnode;
 import api.ApiAccess;
 import api.ApiNode;
 import com.google.gson.Gson;
-import org.hydev.timingmanageserver.database.Database;
-import org.hydev.timingmanageserver.event.Event;
-import org.hydev.timingmanageserver.event.EventManager;
+import org.hydev.timingmanageserver.event.EventHelper;
+import org.hydev.timingmanageserver.event.FinishedEvent;
 import org.hydev.timingmanageserver.status.ServerResponse;
 import org.hydev.timingmanageserver.status.Status;
 
@@ -32,14 +31,13 @@ public class SetDescriptionNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有事件 Token（eventToken）或事件说明（description）参数"));
         }
         // 事件 Token 不存在或未结束
-        if (!EventManager.isEventTokenExist(eventToken)) {
+        if (!EventHelper.isFinishedEventTokenExist(eventToken)) {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "事件 Token 不存在，您可能没有结束该事件（/endEvent）"));
         }
 
-        Event event = EventManager.getEventByToken(eventToken);
-        event.setDescription(description);
-        Database.updateEvent(event);
+        FinishedEvent finishedEvent = EventHelper.getFinishedEventByToken(eventToken);
+        finishedEvent.setDescription(description);
 
-        return EventManager.buildEventJson(event).toString();
+        return EventHelper.buildEventJson(finishedEvent).toString();
     }
 }
