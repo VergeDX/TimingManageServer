@@ -5,15 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hydev.timingmanageserver.database.Database;
 
-import java.util.ArrayList;
-
 @Data
 @NoArgsConstructor
 public class User {
     /**
      * 用户名，只能包含字母、数字和下划线
-     *
-     * @see UserHelper#isUsernameValid(String)
      */
     @DatabaseField(id = true)
     private String username;
@@ -26,8 +22,6 @@ public class User {
 
     /**
      * 该用户的全部事件列表，格式即为 ArrayList.toString()
-     *
-     * @see ArrayList#toString()
      */
     @DatabaseField
     private String eventTokens = "[]";

@@ -19,7 +19,7 @@ public class StartEventNode implements ApiNode {
     }
 
     /**
-     * 开启事件，要求字段：userAccessToken，将挂起一个事件并返回事件 Token
+     * 开启事件，要求字段：username & password，将挂起一个事件并返回事件 Token
      *
      * @return 错误信息或事件 Token
      */

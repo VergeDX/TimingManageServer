@@ -15,8 +15,6 @@ import java.util.Objects;
 public class FinishedEvent extends Event {
     /**
      * 事件访问 Token，格式：md5($username + $startSecond)
-     *
-     * @see EventHelper#generateEventToken(PendingEvent)
      */
     @DatabaseField(id = true)
     private String eventToken;
@@ -51,6 +49,9 @@ public class FinishedEvent extends Event {
     @DatabaseField
     private long intervalSecond;
 
+    /**
+     * 未完成事件在完成时，转为已完成事件
+     */
     public FinishedEvent(PendingEvent pendingEvent) {
         if (Objects.isNull(pendingEvent)) {
             throw new AssertionError();
@@ -77,6 +78,7 @@ public class FinishedEvent extends Event {
 
     public void setDescription(String description) {
         this.description = description;
+        // 设置描述并更新数据库
         update();
     }
 }

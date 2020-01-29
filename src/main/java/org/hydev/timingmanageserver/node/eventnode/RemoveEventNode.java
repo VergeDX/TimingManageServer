@@ -19,7 +19,7 @@ public class RemoveEventNode implements ApiNode {
     }
 
     /**
-     * 移除已完成事件，要求字段：eventToken 和 userAccessToken，将返回提示信息（移除）
+     * 移除已完成事件，要求字段：username & password & eventToken，将返回 "事件已移除"
      *
      * @return 错误信息或 “事件已移除”
      */

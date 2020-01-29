@@ -18,10 +18,9 @@ public class RegisterNode implements ApiNode {
     }
 
     /**
-     * 注册用户，要求字段：username 和 password，将返回用户访问 Token
+     * 注册用户，要求字段：username 和 password，将返回 "注册成功"
      *
-     * @return 错误信息或用户访问 Token
-     * @see UserHelper#isUsernameValid(String)
+     * @return 错误信息或 "注册成功"
      */
     @Override
     public String process(ApiAccess access) {
@@ -46,6 +45,6 @@ public class RegisterNode implements ApiNode {
         }
 
         User user = new User(username, SecureUtil.md5(userPassword));
-        return UserHelper.buildUserJson(user).toString();
+        return "注册成功";
     }
 }

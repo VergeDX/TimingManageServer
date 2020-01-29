@@ -4,7 +4,6 @@ import api.ApiAccess;
 import api.ApiNode;
 import com.google.gson.Gson;
 import org.hydev.timingmanageserver.event.EventHelper;
-import org.hydev.timingmanageserver.event.FinishedEvent;
 import org.hydev.timingmanageserver.status.ServerResponse;
 import org.hydev.timingmanageserver.status.Status;
 
@@ -20,7 +19,6 @@ public class GetEventInfoNode implements ApiNode {
      * 获取事件信息，要求字段：eventToken，将返回事件对象 Json 的封装
      *
      * @return 错误信息或事件对象 Json 的封装
-     * @see EventHelper#buildEventJson(FinishedEvent)
      */
     @Override
     public String process(ApiAccess access) {

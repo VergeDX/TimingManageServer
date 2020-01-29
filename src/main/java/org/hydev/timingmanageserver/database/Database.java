@@ -25,7 +25,6 @@ public class Database {
      * 初始化数据库（建表，给 Dao 赋值）
      */
     public static void initDatabase() {
-        // TODO: 2020/1/25 0025 改用 MySQL
         try (ConnectionSource connectionSource = new JdbcConnectionSource("jdbc:sqlite:Database.db")) {
             TableUtils.createTableIfNotExists(connectionSource, PendingEvent.class);
             TableUtils.createTableIfNotExists(connectionSource, User.class);
@@ -38,6 +37,8 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    // 由于 ORM 框架，以下方法不能被合并
 
     public static void removeEvent(Event event, Class<? extends Event> T) {
         try {

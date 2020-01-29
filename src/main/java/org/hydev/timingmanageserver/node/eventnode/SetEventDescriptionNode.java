@@ -17,7 +17,7 @@ public class SetEventDescriptionNode implements ApiNode {
     }
 
     /**
-     * 设置事件说明，要求字段：eventToken 和 description，将返回事件对象 Json 的封装
+     * 设置事件说明，要求字段：eventToken & description，将返回事件对象 Json 的封装
      *
      * @return 错误信息或事件对象 Json 的封装
      */

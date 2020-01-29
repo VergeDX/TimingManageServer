@@ -26,8 +26,6 @@ public class PendingEvent extends Event {
 
     /**
      * 事件访问 Token，格式：md5($username + $startSecond)
-     *
-     * @see EventHelper#generateEventToken(PendingEvent)
      */
     @DatabaseField
     private String eventToken;

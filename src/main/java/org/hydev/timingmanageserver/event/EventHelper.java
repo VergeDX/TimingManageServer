@@ -5,8 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.j256.ormlite.dao.Dao;
 import org.hydev.timingmanageserver.database.Database;
-import org.hydev.timingmanageserver.status.ServerResponse;
-import org.hydev.timingmanageserver.status.Status;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -17,7 +15,6 @@ public class EventHelper {
      *
      * @param pendingEvent 用户创建的事件
      * @return 生成的访问 Token
-     * @see FinishedEvent#getEventToken()
      */
     public static String generateEventToken(PendingEvent pendingEvent) {
         // 防止重复赋值
@@ -65,7 +62,6 @@ public class EventHelper {
      *
      * @param finishedEvent 需要构建的事件对象
      * @return 构建好的 Json 对象
-     * @see ServerResponse#ServerResponse(Status, String)
      */
     public static JsonObject buildEventJson(FinishedEvent finishedEvent) {
         JsonObject jsonObject = new JsonObject();

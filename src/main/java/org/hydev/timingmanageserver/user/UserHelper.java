@@ -3,8 +3,6 @@ package org.hydev.timingmanageserver.user;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.hydev.timingmanageserver.database.Database;
-import org.hydev.timingmanageserver.status.ServerResponse;
-import org.hydev.timingmanageserver.status.Status;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class UserHelper {
      * @param username 用户名，必须存在（先检查）
      * @param userPasswordMd5 Md5 后的用户密码
      * @return true（正确），false（错误）
-     * @see UserHelper#isUsernameTaken(String)
      */
     public static boolean isPasswordWrong(String username, String userPasswordMd5) {
         // 没有该用户时
@@ -51,7 +48,6 @@ public class UserHelper {
      *
      * @param username 要检查的用户名
      * @return true（合法），false（不合法）
-     * @see User#getUsername()
      */
     public static boolean isUsernameValid(String username) {
         char[] usernameArray = username.toCharArray();
@@ -70,7 +66,6 @@ public class UserHelper {
      *
      * @param user 需要构建的用户对象
      * @return 构建好的 Json 对象
-     * @see ServerResponse#ServerResponse(Status, String)
      */
     public static JsonObject buildUserJson(User user) {
         JsonObject jsonObject = new JsonObject();

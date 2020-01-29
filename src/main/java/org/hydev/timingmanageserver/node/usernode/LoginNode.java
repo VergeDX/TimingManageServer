@@ -19,9 +19,9 @@ public class LoginNode implements ApiNode {
     }
 
     /**
-     * 登录用户，要求字段：username 和 password，将刷新并返回用户访问 Token
+     * 登录用户，要求字段：username 和 password，将返回用户对象 Json 的封装
      *
-     * @return 错误信息或用户访问 Token
+     * @return 错误信息或用用户对象 Json 的封装
      */
     @Override
     public String process(ApiAccess access) {
