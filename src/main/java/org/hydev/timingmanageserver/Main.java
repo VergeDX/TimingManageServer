@@ -30,7 +30,7 @@ public class Main {
 
         apiServer.register(new RegisterNode(), new LoginNode(),
                 new StartEventNode(), new EndEventNode(), new RemoveEventNode(),
-                new GetEventInfoNode(), new SetDescriptionNode());
+                new GetEventInfoNode(), new SetEventDescriptionNode());
         apiServer.start();
     }
 }

@@ -3,7 +3,7 @@ package org.hydev.timingmanageserver.event;
 import org.hydev.timingmanageserver.database.Database;
 
 public abstract class Event {
-    protected Event start(String username) {
+    protected void start(String username) {
         throw new UnsupportedOperationException();
     }
 

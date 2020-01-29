@@ -66,13 +66,13 @@ public class FinishedEvent extends Event {
         intervalSecond = endSecond - startSecond;
 
         // 建新的，删旧的
-        Database.insertFinishedEvent(this);
+        Database.insertOrUpdateFinishedEvent(this);
         Database.removeEvent(pendingEvent, PendingEvent.class);
     }
 
     @Override
     protected void update() {
-        Database.updateFinishedEvent(this);
+        Database.insertOrUpdateFinishedEvent(this);
     }
 
     public void setDescription(String description) {

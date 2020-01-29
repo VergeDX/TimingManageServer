@@ -31,7 +31,7 @@ public class GetEventInfoNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有事件 Token（eventToken）参数"));
         }
         // 事件 Token 不存在或未结束
-        if (!EventHelper.isFinishedEventTokenExist(eventToken)) {
+        if (EventHelper.isFinishedEventTokenNotExist(eventToken)) {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "事件 Token 未找到，您可能没有结束该事件（/endEvent）"));
         }
 

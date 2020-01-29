@@ -10,10 +10,10 @@ import org.hydev.timingmanageserver.status.Status;
 
 import java.util.Objects;
 
-public class SetDescriptionNode implements ApiNode {
+public class SetEventDescriptionNode implements ApiNode {
     @Override
     public String path() {
-        return "/setDescription";
+        return "/setEventDescription";
     }
 
     /**
@@ -31,7 +31,7 @@ public class SetDescriptionNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有事件 Token（eventToken）或事件说明（description）参数"));
         }
         // 事件 Token 不存在或未结束
-        if (!EventHelper.isFinishedEventTokenExist(eventToken)) {
+        if (EventHelper.isFinishedEventTokenNotExist(eventToken)) {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "事件 Token 不存在，您可能没有结束该事件（/endEvent）"));
         }
 

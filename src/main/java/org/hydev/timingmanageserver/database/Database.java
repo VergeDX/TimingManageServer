@@ -61,17 +61,9 @@ public class Database {
         }
     }
 
-    public static void insertFinishedEvent(FinishedEvent finishedEvent) {
+    public static void insertOrUpdateFinishedEvent(FinishedEvent finishedEvent) {
         try {
             finishedEventDao.createOrUpdate(finishedEvent);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void updateFinishedEvent(FinishedEvent finishedEvent) {
-        try {
-            finishedEventDao.update(finishedEvent);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -34,7 +34,7 @@ public class EndEventNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有用户名（username）或密码（password）参数"));
         }
         // 没有这个用户名/密码
-        if (!UserHelper.isUsernameTaken(username) || !UserHelper.isPasswordCorrect(username, SecureUtil.md5(userPassword))) {
+        if (!UserHelper.isUsernameTaken(username) || UserHelper.isPasswordWrong(username, SecureUtil.md5(userPassword))) {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "用户名或密码错误。请注意区分大小写"));
         }
         // 用户没有未结束的事件

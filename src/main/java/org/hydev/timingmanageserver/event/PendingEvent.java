@@ -37,13 +37,12 @@ public class PendingEvent extends Event {
     }
 
     @Override
-    protected Event start(String username) {
+    protected void start(String username) {
         creator = username;
         startSecond = Instant.now().getEpochSecond();
         EventHelper.generateEventToken(this);
 
         Database.insertPendingEvent(this);
-        return this;
     }
 
     @Override

@@ -36,13 +36,13 @@ public class UserHelper {
      * @return true（正确），false（错误）
      * @see UserHelper#isUsernameTaken(String)
      */
-    public static boolean isPasswordCorrect(String username, String userPasswordMd5) {
+    public static boolean isPasswordWrong(String username, String userPasswordMd5) {
         // 没有该用户时
         if (!isUsernameTaken(username)) {
-            return false;
+            return true;
         } else {
             User user = Database.getUserByUsername(username);
-            return user.getUserPasswordMd5().equals(userPasswordMd5);
+            return !user.getUserPasswordMd5().equals(userPasswordMd5);
         }
     }
 

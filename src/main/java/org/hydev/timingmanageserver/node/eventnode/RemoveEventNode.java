@@ -34,7 +34,7 @@ public class RemoveEventNode implements ApiNode {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "请求头（Header）中没有用户名（username）、密码（password）或事件 Token（eventToken）参数"));
         }
         // 用户信息不正确
-        if (!UserHelper.isPasswordCorrect(username, SecureUtil.md5(userPassword))) {
+        if (UserHelper.isPasswordWrong(username, SecureUtil.md5(userPassword))) {
             return new Gson().toJson(new ServerResponse(Status.ERROR, "用户名或密码错误"));
         }
         // 该用户没有这个事件

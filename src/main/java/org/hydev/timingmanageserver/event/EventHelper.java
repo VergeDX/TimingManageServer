@@ -37,9 +37,9 @@ public class EventHelper {
      * @param eventToken 要查询的事件 Token
      * @return true（存在），false（不存在）
      */
-    public static boolean isFinishedEventTokenExist(String eventToken) {
+    public static boolean isFinishedEventTokenNotExist(String eventToken) {
         FinishedEvent finishedEvent = getFinishedEventByToken(eventToken);
-        return !Objects.isNull(finishedEvent);
+        return Objects.isNull(finishedEvent);
     }
 
     /**
