@@ -6,6 +6,12 @@
 2. 命令行执行 `java -jar TimingManageServer-x.x.x-jar-with-dependencies.jar 端口号 (默认为 2333)`
 3. 服务器即在 `http://localhost:2333` 启动
 
+## 构建
+你可以通过构建来获得未发布的最新版本
+1. `git clone https://github.com/VergeDX/TimingManageServer.git`
+2. `cd TimingManageServer/`
+3. `mvn assembly:assembly`
+
 ## Api 节点与功能
 请求参数：
 
