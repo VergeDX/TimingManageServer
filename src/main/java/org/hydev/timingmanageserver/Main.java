@@ -23,7 +23,7 @@ public class Main {
 
         Database.initDatabase();
 
-        ApiServer apiServer = new ApiServer(2333);
+        ApiServer apiServer = new ApiServer(port);
         apiServer.setHelpUsage(HELP_USAGE);
 
         apiServer.register(new RegisterNode(), new LoginNode(),
