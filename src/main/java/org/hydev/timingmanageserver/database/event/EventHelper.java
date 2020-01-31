@@ -1,4 +1,4 @@
-package org.hydev.timingmanageserver.event;
+package org.hydev.timingmanageserver.database.event;
 
 import cn.hutool.crypto.SecureUtil;
 import com.google.gson.Gson;

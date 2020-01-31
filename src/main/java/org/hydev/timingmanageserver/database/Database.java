@@ -6,10 +6,10 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
-import org.hydev.timingmanageserver.event.Event;
-import org.hydev.timingmanageserver.event.FinishedEvent;
-import org.hydev.timingmanageserver.event.PendingEvent;
-import org.hydev.timingmanageserver.user.User;
+import org.hydev.timingmanageserver.database.event.Event;
+import org.hydev.timingmanageserver.database.event.FinishedEvent;
+import org.hydev.timingmanageserver.database.event.PendingEvent;
+import org.hydev.timingmanageserver.database.user.User;
 
 import java.io.IOException;
 import java.sql.SQLException;

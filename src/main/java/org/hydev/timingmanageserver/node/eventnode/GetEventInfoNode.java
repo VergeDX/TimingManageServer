@@ -3,7 +3,7 @@ package org.hydev.timingmanageserver.node.eventnode;
 import api.ApiAccess;
 import api.ApiNode;
 import com.google.gson.Gson;
-import org.hydev.timingmanageserver.event.EventHelper;
+import org.hydev.timingmanageserver.database.event.EventHelper;
 import org.hydev.timingmanageserver.status.ServerResponse;
 import org.hydev.timingmanageserver.status.Status;
 

@@ -1,4 +1,4 @@
-package org.hydev.timingmanageserver.event;
+package org.hydev.timingmanageserver.database.event;
 
 import com.j256.ormlite.field.DatabaseField;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package org.hydev.timingmanageserver.user;
+package org.hydev.timingmanageserver.database.user;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
